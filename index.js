@@ -46,6 +46,14 @@ app.put("/api/genres/:genre", (req, res) => {
   res.send(genre);
 });
 
+app.delete("/api/genres/:genre", (req, res) => {
+  const genre = genres.find((item) => item.name === req.params.genre);
+
+  if (!genre) return res.status(404).send("requested genre not found");
+
+  res.send(genre);
+});
+
 const validateGenre = (genre) => {
   const schema = Joi.object({ name: Joi.string().min(3).required() });
   return schema.validate(genre);
